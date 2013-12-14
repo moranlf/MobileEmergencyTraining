@@ -1,0 +1,6 @@
+namespace MobileBasedTraining.Model;
+
+fact Individual {
+key:
+    string anonymousId;
+}

@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="DataModelStoreContainer">
+    <EntitySet Name="Videos" EntityType="DataModel.Store.Videos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tags" EntityType="DataModel.Store.Tags" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Ratings" EntityType="DataModel.Store.Ratings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Clusters" EntityType="DataModel.Store.Clusters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Courses" EntityType="DataModel.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CourseVideos" EntityType="DataModel.Store.CourseVideos" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="VideoRatings" EntityType="DataModel.Store.VideoRatings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="VideoTags" EntityType="DataModel.Store.VideoTags" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_VideoRatings_Ratings" Association="DataModel.Store.FK_VideoRatings_Ratings">
+      <End Role="Ratings" EntitySet="Ratings" />
+      <End Role="VideoRatings" EntitySet="VideoRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VideoRatings_Video" Association="DataModel.Store.FK_VideoRatings_Video">
+      <End Role="Video" EntitySet="Videos" />
+      <End Role="VideoRatings" EntitySet="VideoRatings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VideoTags_Tags" Association="DataModel.Store.FK_VideoTags_Tags">
+      <End Role="Tags" EntitySet="Tags" />
+      <End Role="VideoTags" EntitySet="VideoTags" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VideoTags_Video" Association="DataModel.Store.FK_VideoTags_Video">
+      <End Role="Video" EntitySet="Videos" />
+      <End Role="VideoTags" EntitySet="VideoTags" />
+    </AssociationSet>
+    <AssociationSet Name="ClusterCurriculum" Association="DataModel.Store.ClusterCurriculum">
+      <End Role="Cluster" EntitySet="Clusters" />
+      <End Role="Curriculum" EntitySet="Courses" />
+    </AssociationSet>
+    <AssociationSet Name="VideoCourseVideo" Association="DataModel.Store.VideoCourseVideo">
+      <End Role="Video" EntitySet="Videos" />
+      <End Role="CourseVideo" EntitySet="CourseVideos" />
+    </AssociationSet>
+    <AssociationSet Name="CourseCourseVideo" Association="DataModel.Store.CourseCourseVideo">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="CourseVideo" EntitySet="CourseVideos" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Videos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PublicationDate" Type="datetime" Nullable="false" />
+    <Property Name="Language" Type="nchar" Nullable="false" MaxLength="2" />
+    <Property Name="URL" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PublisherName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PublisherEmail" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tags">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tag" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ratings">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Rating" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Clusters">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsGeneral" Type="bit" Nullable="false" DefaultValue="false" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Cluster_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CourseVideos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Position" Type="int" Nullable="false" />
+    <Property Name="VideoId" Type="int" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VideoRatings">
+    <Key>
+      <PropertyRef Name="Ratings_Id" />
+      <PropertyRef Name="Videos_Id" />
+    </Key>
+    <Property Name="Ratings_Id" Type="int" Nullable="false" />
+    <Property Name="Videos_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VideoTags">
+    <Key>
+      <PropertyRef Name="Tags_Id" />
+      <PropertyRef Name="Videos_Id" />
+    </Key>
+    <Property Name="Tags_Id" Type="int" Nullable="false" />
+    <Property Name="Videos_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ClusterCurriculum">
+    <End Role="Cluster" Type="DataModel.Store.Clusters" Multiplicity="1" />
+    <End Role="Curriculum" Type="DataModel.Store.Courses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cluster">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Curriculum">
+        <PropertyRef Name="Cluster_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="VideoCourseVideo">
+    <End Role="Video" Type="DataModel.Store.Videos" Multiplicity="1" />
+    <End Role="CourseVideo" Type="DataModel.Store.CourseVideos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Video">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseVideo">
+        <PropertyRef Name="VideoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseCourseVideo">
+    <End Role="Course" Type="DataModel.Store.Courses" Multiplicity="1" />
+    <End Role="CourseVideo" Type="DataModel.Store.CourseVideos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CourseVideo">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoRatings_Ratings">
+    <End Role="Ratings" Type="DataModel.Store.Ratings" Multiplicity="1" />
+    <End Role="VideoRatings" Type="DataModel.Store.VideoRatings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ratings">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="VideoRatings">
+        <PropertyRef Name="Ratings_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoRatings_Video">
+    <End Role="VideoRatings" Type="DataModel.Store.VideoRatings" Multiplicity="*" />
+    <End Role="Video" Type="DataModel.Store.Videos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Video">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="VideoRatings">
+        <PropertyRef Name="Videos_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoTags_Tags">
+    <End Role="Tags" Type="DataModel.Store.Tags" Multiplicity="1" />
+    <End Role="VideoTags" Type="DataModel.Store.VideoTags" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tags">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="VideoTags">
+        <PropertyRef Name="Tags_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VideoTags_Video">
+    <End Role="VideoTags" Type="DataModel.Store.VideoTags" Multiplicity="*" />
+    <End Role="Video" Type="DataModel.Store.Videos" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Video">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="VideoTags">
+        <PropertyRef Name="Videos_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2008/09/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="DataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" >
+        <EntityContainer Name="DataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Videos" EntityType="DataModel.Video" />
+          <EntitySet Name="Tags" EntityType="DataModel.Tags" />
+          <EntitySet Name="Ratings" EntityType="DataModel.Ratings" />
+          <AssociationSet Name="VideoRatings" Association="DataModel.VideoRatings">
+            <End Role="Ratings" EntitySet="Ratings" />
+            <End Role="Video" EntitySet="Videos" />
+          </AssociationSet>
+          <AssociationSet Name="VideoTags" Association="DataModel.VideoTags">
+            <End Role="Tags" EntitySet="Tags" />
+            <End Role="Video" EntitySet="Videos" />
+          </AssociationSet>
+          <EntitySet Name="Clusters" EntityType="DataModel.Cluster" />
+          <EntitySet Name="Courses" EntityType="DataModel.Course" />
+          <AssociationSet Name="ClusterCurriculum" Association="DataModel.ClusterCurriculum">
+            <End Role="Cluster" EntitySet="Clusters" />
+            <End Role="Curriculum" EntitySet="Courses" />
+          </AssociationSet>
+          <EntitySet Name="CourseVideos" EntityType="DataModel.CourseVideo" />
+          <AssociationSet Name="VideoCourseVideo" Association="DataModel.VideoCourseVideo">
+            <End Role="Video" EntitySet="Videos" />
+            <End Role="CourseVideo" EntitySet="CourseVideos" />
+          </AssociationSet>
+          <AssociationSet Name="CourseCourseVideo" Association="DataModel.CourseCourseVideo">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="CourseVideo" EntitySet="CourseVideos" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Video">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Title" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="DateTime" Name="PublicationDate" Nullable="false" />
+          <Property Type="String" Name="Language" Nullable="false" FixedLength="true" MaxLength="2" />
+          <Property Type="String" Name="URL" Nullable="false" />
+          <Property Type="String" Name="PublisherName" Nullable="false" />
+          <Property Type="String" Name="PublisherEmail" Nullable="false" />
+          <NavigationProperty Name="Ratings" Relationship="DataModel.VideoRatings" FromRole="Video" ToRole="Ratings" />
+          <NavigationProperty Name="Tags" Relationship="DataModel.VideoTags" FromRole="Video" ToRole="Tags" />
+          <NavigationProperty Name="CourseVideos" Relationship="DataModel.VideoCourseVideo" FromRole="Video" ToRole="CourseVideo" />
+        </EntityType>
+        <EntityType Name="Tags">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Videos" Relationship="DataModel.VideoTags" FromRole="Tags" ToRole="Video" />
+          <Property Type="String" Name="Tag" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Videos" Relationship="DataModel.VideoRatings" FromRole="Ratings" ToRole="Video" />
+          <Property Type="Byte" Name="Rating" Nullable="false" />
+        </EntityType>
+        <Association Name="VideoRatings">
+          <End Type="DataModel.Ratings" Role="Ratings" Multiplicity="*" />
+          <End Type="DataModel.Video" Role="Video" Multiplicity="*" />
+        </Association>
+        <Association Name="VideoTags">
+          <End Type="DataModel.Tags" Role="Tags" Multiplicity="*" />
+          <End Type="DataModel.Video" Role="Video" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Cluster">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <NavigationProperty Name="Courses" Relationship="DataModel.ClusterCurriculum" FromRole="Cluster" ToRole="Curriculum" />
+          <Property Type="Boolean" Name="IsGeneral" Nullable="false" DefaultValue="False" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <NavigationProperty Name="Cluster" Relationship="DataModel.ClusterCurriculum" FromRole="Curriculum" ToRole="Cluster" />
+          <NavigationProperty Name="CourseVideos" Relationship="DataModel.CourseCourseVideo" FromRole="Course" ToRole="CourseVideo" />
+        </EntityType>
+        <Association Name="ClusterCurriculum">
+          <End Type="DataModel.Cluster" Role="Cluster" Multiplicity="1" />
+          <End Type="DataModel.Course" Role="Curriculum" Multiplicity="*" />
+        </Association>
+        <EntityType Name="CourseVideo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Position" Nullable="false" />
+          <NavigationProperty Name="Video" Relationship="DataModel.VideoCourseVideo" FromRole="CourseVideo" ToRole="Video" />
+          <Property Type="Int32" Name="VideoId" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="DataModel.CourseCourseVideo" FromRole="CourseVideo" ToRole="Course" />
+          <Property Type="Int32" Name="CourseId" Nullable="false" />
+        </EntityType>
+        <Association Name="VideoCourseVideo">
+          <End Type="DataModel.Video" Role="Video" Multiplicity="1" />
+          <End Type="DataModel.CourseVideo" Role="CourseVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Video">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseVideo">
+              <PropertyRef Name="VideoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CourseCourseVideo">
+          <End Type="DataModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="DataModel.CourseVideo" Role="CourseVideo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CourseVideo">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DataModelStoreContainer" CdmEntityContainer="DataModelContainer">
+    <EntitySetMapping Name="Videos">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Video)">
+        <MappingFragment StoreEntitySet="Videos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="PublicationDate" ColumnName="PublicationDate" />
+          <ScalarProperty Name="Language" ColumnName="Language" />
+          <ScalarProperty Name="URL" ColumnName="URL" />
+          <ScalarProperty Name="PublisherName" ColumnName="PublisherName" />
+          <ScalarProperty Name="PublisherEmail" ColumnName="PublisherEmail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tags">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Tags)">
+        <MappingFragment StoreEntitySet="Tags">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ratings">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Ratings)">
+        <MappingFragment StoreEntitySet="Ratings">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Rating" ColumnName="Rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Clusters">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Cluster)">
+        <MappingFragment StoreEntitySet="Clusters">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsGeneral" ColumnName="IsGeneral" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.Course)">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CourseVideos">
+      <EntityTypeMapping TypeName="IsTypeOf(DataModel.CourseVideo)">
+        <MappingFragment StoreEntitySet="CourseVideos">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Position" ColumnName="Position" />
+          <ScalarProperty Name="VideoId" ColumnName="VideoId" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="VideoRatings" TypeName="DataModel.VideoRatings" StoreEntitySet="VideoRatings">
+      <EndProperty Name="Ratings">
+        <ScalarProperty Name="Id" ColumnName="Ratings_Id" />
+      </EndProperty>
+      <EndProperty Name="Video">
+        <ScalarProperty Name="Id" ColumnName="Videos_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="VideoTags" TypeName="DataModel.VideoTags" StoreEntitySet="VideoTags">
+      <EndProperty Name="Tags">
+        <ScalarProperty Name="Id" ColumnName="Tags_Id" />
+      </EndProperty>
+      <EndProperty Name="Video">
+        <ScalarProperty Name="Id" ColumnName="Videos_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ClusterCurriculum" TypeName="DataModel.ClusterCurriculum" StoreEntitySet="Courses">
+      <EndProperty Name="Cluster">
+        <ScalarProperty Name="Id" ColumnName="Cluster_Id" />
+      </EndProperty>
+      <EndProperty Name="Curriculum">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,146 @@
+﻿@model MobileBasedTrainingServer.ViewModels.CourseVideosViewModel
+
+@{
+	ViewBag.Title = "Courses & Videos";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<script type="text/x-kendo-tmpl" id="listView">
+	<div class="courseList-item">
+		<strong>#:Course.Name#</strong><br/>
+		#:Course.Description#
+	</div>
+</script>
+
+<table>
+	<tr>
+		<td class="courseList-container">
+			<h4 class="header">Courses</h4>
+			<ul>
+				@foreach (var course in Model.Courses)
+				{
+					if (course.Id == Model.SelectedCourseId)
+					{
+						<li class="selected">@Html.ActionLink(course.Name, "Videos", new { courseId = course.Id })</li>
+					}
+					else
+					{
+						<li>@Html.ActionLink(course.Name, "Videos", new { courseId = course.Id })</li>
+					}
+				}
+			</ul>
+		</td>
+		<td class="courseList-videos">
+			@if (Model.SelectedCourse != null)
+			{
+				<h4 class="header">Videos in @Model.SelectedCourse.Name</h4>
+				if (Model.SelectedCourseVideos.Any())
+				{
+					@*<ol id="videosList">
+						@foreach (var video in Model.SelectedCourseVideos)
+						{
+							<li><a href="@video.URL">@video.Title</a>@Html.ActionLink("Remove", "RemoveVideoFromCourse", new { courseId = Model.SelectedCourseId, videoId = video.Id })</li>
+						}
+					</ol>*@
+					@(Html.Kendo().Grid(Model.SelectedCourseVideos)
+						.Name("Videos")
+						.HtmlAttributes(new { style = "margin-top: 10px" })
+						.Columns(columns =>
+						{
+							columns.Template(@<text>
+								<div class="videoIndex-thumbnail-col">
+									<img class="videoIndex-thumbnail" src="@item.ThumbnailURL"/>
+								</div>
+								<div class="videoIndex-content">
+									<a href="@item.URL" class="videoIndex-title">@item.Title</a><span>(@item.Language)</span><br/>
+									<span class="videoIndex-description">@item.Description</span>
+								</div>
+							</text>).HeaderTemplate(@<text>
+								Title
+							</text>);
+							columns.Template(@<text>
+								<a href="mailto:@item.PublisherEmail">@item.PublisherName</a>
+							</text>).HeaderTemplate(@<text>
+								Publisher
+							</text>).Width(150);
+							columns.Template(@<text>
+								@Html.ActionLink("Remove", "RemoveVideoFromCourse", new { courseId = Model.SelectedCourseId, videoId = item.Id })
+							</text>).Width(100).HtmlAttributes(new { @class = "videoIndex-commands-col" });
+						})
+						.Scrollable(scr => scr.Height(500))
+					)
+				}
+				else
+				{
+					<h5>No videos in this course yet. Add some videos.</h5>
+				}
+				using (Html.BeginForm("AddVideoToCourse", "Course"))
+				{
+					@Html.Hidden("courseId", Model.SelectedCourseId)
+					@(Html.Kendo().ComboBox()
+						.Name("videoSelected").HtmlAttributes(new { style = "width: 80%;" })
+						.DataTextField("Title")
+						.DataValueField("Id")
+						.Filter("contains")
+						.BindTo(Model.Videos)
+					)
+					<input type="submit" value="Add Video" />
+				}
+			}
+			else
+			{
+				<h4 class="header">No course selected</h4>
+			}
+		</td>
+	</tr>
+</table>
+
+
+
+
+<style>
+	.courseList-container
+	{
+		width: 25%;
+		padding: 10px;
+		background-color: #CCC;
+		vertical-align: top;
+	}
+	.courseList-container .header
+	{
+		margin-left: 5px;
+		margin-top: 5px;
+	}
+	.courseList-container ul
+	{
+		padding: 0px;
+		margin-top: 10px;
+	}
+	.courseList-container li
+	{
+		list-style: none;
+		padding: 5px 10px;
+	}
+	.courseList-container li.selected
+	{
+		background-color: #FFF;
+		color: #777;
+	}
+	.courseList-item
+	{
+		border-bottom: solid 1px #777;
+		cursor: pointer;
+		padding: 5px;
+	}
+	.courseList-videos
+	{
+		padding: 10px;
+		vertical-align: top;
+	}
+	.courseList-videos .header
+	{
+		margin-left: 5px;
+		margin-top: 5px;
+	}
+</style>

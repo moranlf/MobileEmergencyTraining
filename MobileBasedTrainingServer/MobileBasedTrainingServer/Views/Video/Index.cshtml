@@ -1,0 +1,57 @@
+﻿@model IEnumerable<MobileBasedTrainingServer.ViewModels.VideoViewModel>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<h2>Videos</h2>
+
+@(Html.Kendo().Grid(Model)
+	.Name("Videos")
+	.HtmlAttributes(new { style = "height:500px" })
+	.Columns(columns =>
+	{
+		columns.Bound(v => v.Title).ClientTemplate(
+			"<div class=\"videoIndex-thumbnail-col\">" +
+				"<img class=\"videoIndex-thumbnail\" src=\"#=ThumbnailURL#\"/>"+
+			"</div>" +
+			"<div class=\"videoIndex-content\">"+
+				"<a href=\"#=URL#\" class=\"videoIndex-title\">#:Title#</a><span>(#:Language#)</span><br/>" +
+				"<span class=\"videoIndex-description\">#:Description#</span>"+
+			"</div>");
+		columns.Bound(v => v.PublicationDate).Format("{0:d}").Title("Pub Date").Width(100);
+		columns.Bound(v => v.PublisherName).ClientTemplate("<a href=\"mailto:#=PublisherEmail#\">#:PublisherName#</a>").Title("Publisher").Width(150);
+		columns.Command(command => { command.Edit(); command.Destroy(); }).Width(100).HtmlAttributes(new { @class = "videoIndex-commands-col" });
+	})
+	.ToolBar(toolbar => toolbar.Create())
+	.Editable(editable => { editable.Mode(GridEditMode.PopUp); })
+	.Sortable()
+	.Pageable()
+	.Scrollable()
+	.DataSource(dataSource => dataSource
+		.Ajax()
+		.PageSize(20)
+		.Model(model => { model.Id(v => v.Id); })
+		.Events(events => events.Error("error_handler"))
+		.Create("EditingInline_Create", "Video")
+		.Update("Update", "Video")
+		.Destroy("Delete", "Video")
+		.ServerOperation(false)
+	 )
+)
+
+<script type="text/javascript">
+	function error_handler(e) {    
+		if (e.errors) {
+			var message = "Errors:\n";
+			$.each(e.errors, function (key, value) {
+				if ('errors' in value) {
+					$.each(value.errors, function() {
+						message += this + "\n";
+					});
+				}
+			});        
+			alert(message);
+		}
+	}
+</script>

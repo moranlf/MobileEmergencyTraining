@@ -1,0 +1,68 @@
+﻿@model MobileBasedTrainingServer.ViewModels.VideoViewModel
+
+<div class="editor-label">
+	@Html.LabelFor(model => model.Title)
+	@Html.ValidationMessageFor(model => model.Title)
+</div>
+<div class="editor-field">
+	@Html.EditorFor(model => model.Title,new{ @class=""})
+	@Html.ValidationMessageFor(model => model.Title)
+</div>
+
+<div class="editor-label">
+	@Html.LabelFor(model => model.Description)
+	@Html.ValidationMessageFor(model => model.Description)
+</div>
+<div class="editor-field videoEdit-description">
+	@Html.EditorFor(model => model.Description)
+	@Html.ValidationMessageFor(model => model.Description)
+</div>
+
+<div class="editor-label">
+	@Html.LabelFor(model => model.PublicationDate, "Publication Date")
+	@Html.ValidationMessageFor(model => model.PublicationDate)
+</div>
+<div class="editor-field">
+	@Html.EditorFor(model => model.PublicationDate)
+	@Html.ValidationMessageFor(model => model.PublicationDate)
+</div>
+
+<div class="editor-label">
+	@Html.LabelFor(model => model.Language)
+	@Html.ValidationMessageFor(model => model.Language)
+</div>
+<div class="editor-field">
+	@Html.EditorFor(model => model.Language)
+	@Html.ValidationMessageFor(model => model.Language)
+</div>
+
+<div class="editor-label">
+	@Html.LabelFor(model => model.URL, "URL")
+	@Html.ValidationMessageFor(model => model.URL)
+	
+</div>
+<div class="editor-field">
+	@Html.EditorFor(model => model.URL)
+	@Html.ValidationMessageFor(model => model.URL)
+</div>
+
+<div class="editor-label">
+	@Html.LabelFor(model => model.PublisherName, "Publisher Name")
+	@Html.ValidationMessageFor(model => model.PublisherName)
+	
+</div>
+<div class="editor-field">
+	@Html.EditorFor(model => model.PublisherName)
+	@Html.ValidationMessageFor(model => model.PublisherName)
+</div>
+
+<div class="editor-label">
+	@Html.LabelFor(model => model.PublisherEmail, "Publisher Email")
+	@Html.ValidationMessageFor(model => model.PublisherEmail)
+	
+</div>
+<div class="editor-field">
+	@Html.EditorFor(model => model.PublisherEmail)
+	@Html.ValidationMessageFor(model => model.PublisherEmail)
+</div>
+<div>@Html.ValidationSummary()</div>

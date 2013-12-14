@@ -1,0 +1,66 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="MobileBasedTrainingWindowsPhoneApp.Views.SearchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:itzben="clr-namespace:Itzben;assembly=Itzben"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True"
+    DataContext="{Binding Search, Source={StaticResource Locator}}">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <itzben:VisibleWhenTrueConverter
+            x:Key="VisibleWhenTrueConverter" />
+        <DataTemplate x:Key="CourseTemplate">
+        	<Grid Width="451" Margin="6">
+        		<Grid.RowDefinitions>
+        			<RowDefinition Height="88*"/>
+        			<RowDefinition Height="87*"/>
+        		</Grid.RowDefinitions>
+        		<Grid.ColumnDefinitions>
+        			<ColumnDefinition/>
+        		</Grid.ColumnDefinitions>
+        		<TextBlock Text="{Binding name}" FontSize="{StaticResource PhoneFontSizeLarge}" TextWrapping="Wrap" Margin="3">
+        			<TextBlock.Foreground>
+        				<SolidColorBrush Color="{StaticResource PhoneForegroundColor}"/>
+        			</TextBlock.Foreground>
+        		</TextBlock>
+        		<TextBlock Text="{Binding description}" FontSize="{StaticResource PhoneFontSizeMedium}" TextWrapping="Wrap" Grid.Row="1" Margin="3">
+        			<TextBlock.Foreground>
+        				<SolidColorBrush Color="{StaticResource PhoneSubtleColor}"/>
+        			</TextBlock.Foreground>
+        		</TextBlock>
+        	</Grid>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent" d:DataContext="{d:DesignData /SampleData/SearchViewModelSampleData.xaml}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+
+        <!--ContentPanel - place additional content here-->
+        <StackPanel Orientation="Vertical">
+    		<TextBlock Margin="21,10,0,10" Text="courses" Style="{StaticResource PhoneTextTitle1Style}" Height="97"/>
+    		<ProgressBar IsIndeterminate="{Binding Busy}"/>
+    		<TextBlock Text="{Binding Error}" VerticalAlignment="Top" Margin="10" FontSize="{StaticResource PhoneFontSizeMediumLarge}" TextWrapping="Wrap" Visibility="{Binding HasError, Converter={StaticResource VisibleWhenTrueConverter}}"/>
+    	</StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        	<ListBox ItemTemplate="{StaticResource CourseTemplate}" ItemsSource="{Binding Courses}"/>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

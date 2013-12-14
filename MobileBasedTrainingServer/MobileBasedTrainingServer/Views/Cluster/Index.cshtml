@@ -1,0 +1,76 @@
+﻿@using MobileBasedTrainingServer.ViewModels;
+
+@model IEnumerable<ClusterViewModel>
+
+<h2>Select Cluster</h2>
+
+@(Html.Kendo()
+      .DropDownList()
+      .Name("clusters")
+      .HtmlAttributes(new { style = "width:300px" })
+      .OptionLabel("Select Cluster...")
+      .DataTextField("Description")
+      .DataValueField("Id")
+      .BindTo(@Model)
+)
+
+<h2>Select Course</h2>
+@(Html.Kendo()
+      .DropDownList()
+      .Name("courses")
+      .HtmlAttributes(new { style = "width:300px" })
+      .OptionLabel("Select Course...")
+      .DataTextField("Description")
+      .DataValueField("Id")
+      .DataSource(source =>
+      {
+          source.Read(read =>
+          {
+              read.Action("Courses_Read", "Cluster").Data("filterCourses");
+          })
+                .ServerFiltering(true);
+      })
+      .Enable(false)
+      .AutoBind(false)
+      .Events(e =>
+      {
+          e.Select("select");
+      })
+      .CascadeFrom("clusters")
+)
+<h2>Available Vidoes</h2>
+@(Html.Kendo()
+      .Grid<VideoViewModel>()
+      .Name("grid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.Title);
+          columns.Bound(c => c.Description).Width(200);
+          columns.Bound(c => c.Language);
+          columns.Bound(c => c.PublisherName);
+      })
+      .Sortable()
+      .Scrollable()
+      .DataSource(dataSource => dataSource.Ajax()
+                                          .PageSize(20)
+                                          .Read(read => read.Action("Videos_Read", "Cluster")
+                                                            .Data("filterVideos")))
+)
+
+<script>
+    function filterCourses() {
+        return {
+            cluster: $("#clusters").val()
+        };
+    }
+    function filterVideos() {
+        return {
+            course: $("#courses").val()
+        };
+    }
+    function select(e) {
+        //$("#grid").data("kendoGrid").Refesh();
+        //var dataItem = this.dataItem(e.item.index());
+        //alert("event :: select (" + dataItem.Text + " : " + dataItem.Value + ")");
+    };
+</script>

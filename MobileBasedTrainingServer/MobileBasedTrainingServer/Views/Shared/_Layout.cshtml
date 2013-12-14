@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+@using MobileBasedTrainingServer.Controllers;
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Mobile Based Emergency Training- @ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+        <!--This bundle was moved by the Kendo UI VS Extensions for compatibility reasons-->
+        @Scripts.Render("~/bundles/jquery")
+        <!--This CSS entry was added by the Kendo UI VS Extensions for compatibility reasons-->
+        <link href="@Url.Content("~/Content/kendo.compatibility.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2013.2.716/kendo.common.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2013.2.716/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2013.2.716/kendo.metro.min.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/kendo/2013.2.716/kendo.dataviz.metro.min.css")" rel="stylesheet" type="text/css" />
+        <script src="@Url.Content("~/Scripts/kendo/2013.2.716/jquery.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/2013.2.716/kendo.all.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo/2013.2.716/kendo.aspnetmvc.min.js")"></script>
+        <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    </head>
+    <body>
+        <header>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p class="site-title"><img src="~/Content/images/logo.png" /></p>
+                </div>
+                <div class="float-right">
+                    <section id="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                    <nav>
+                        @(Html.Kendo()
+                              .Menu()
+                              .Name("menu")
+                              .Items(items =>
+                              {
+                                  items.Add().Text("Home").Action<HomeController>(x => x.Index());
+                                  items.Add().Text("About").Action<HomeController>(x => x.About());
+                                  items.Add().Text("Training").Action<ClusterController>(x => x.Index());
+                                  items.Add().Text("Administration").Items(adminItems=>
+                                  {
+                                      adminItems.Add().Text("Courses").Action<CourseController>(x => x.Index());
+                                      adminItems.Add().Text("Videos").Action<VideoController>(x => x.Index());
+                                      adminItems.Add().Text("Course Videos").Action<CourseController>(x => x.Videos(null));
+                                  });
+                              })
+                        )
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET MVC Application</p>
+                </div>
+            </div>
+        </footer>
+    
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

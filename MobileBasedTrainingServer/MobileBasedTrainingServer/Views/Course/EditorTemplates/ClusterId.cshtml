@@ -1,0 +1,17 @@
+﻿    @model int
+
+    @(Html.Kendo()
+          .DropDownList()
+          .Name("ClusterId")
+          .DataTextField("Description")
+          .DataValueField("Id")
+          .DataSource(source =>
+          {
+              source.Read(read =>
+              {
+                  read.Action("Clusters_Read", "Course");
+              })
+                    .ServerFiltering(false);
+          })
+          
+)

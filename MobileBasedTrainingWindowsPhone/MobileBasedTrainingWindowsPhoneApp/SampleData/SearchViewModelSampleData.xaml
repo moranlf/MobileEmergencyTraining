@@ -1,0 +1,14 @@
+﻿<ViewModels:SearchViewModel xmlns:ViewModels="clr-namespace:MobileBasedTrainingWindowsPhoneApp.ViewModels" xmlns:Models="clr-namespace:MobileBasedTrainingWindowsPhoneApp.Models" Busy="False" Error="Suscipit elit ipsum vestibulum torquent" HasError="True">
+	<ViewModels:SearchViewModel.Courses>
+		<Models:Course cluster="Curabitur vestibulum phasellus nam maecenas" description="Consequat class aenean curae" id="81" name="Convallis donec dignissim adipiscing sed" cluster="Maecenas"/>
+		<Models:Course cluster="Etiam aliquam fusce" description="Praesent mauris" id="70" name="Parturient vestibulum integer nullam" cluster="Aenean"/>
+		<Models:Course cluster="Quisque aptent cras lorem vivamus" description="Morbi dis accumsan" id="84" name="Bibendum elementum dictumst vestibulum" cluster="Cras"/>
+		<Models:Course cluster="Duis adipiscing aliquam eleifend" description="Est facilisi parturient aliquet" id="45" name="Vestibulum blandit faucibus" cluster="Duis"/>
+		<Models:Course cluster="Facilisis habitant fermentum" description="Fringilla auctor nunc" id="19" name="Inceptos amet habitasse nulla" cluster="Praesent"/>
+		<Models:Course cluster="Congue ante" description="Commodo cursus" id="74" name="Conubia hendrerit hac arcu" cluster="Mauris"/>
+		<Models:Course cluster="Diam cubilia" description="Vestibulum proin leo mus" id="96" name="Interdum himenaeos nec" cluster="Accumsan"/>
+		<Models:Course cluster="Augue eget non per dictum" description="Sed imperdiet dolor lobortis nascetur" id="41" name="Dapibus egestas lectus sem pharetra" cluster="Nunc"/>
+		<Models:Course cluster="Malesuada placerat penatibus" description="Pulvinar adipiscing fames euismod" id="58" name="Parturient porttitor felis" cluster="Bibendum"/>
+		<Models:Course cluster="Tincidunt sit" description="Sagittis feugiat" id="69" name="Senectus sociosqu vel" cluster="Nullam"/>
+	</ViewModels:SearchViewModel.Courses>
+</ViewModels:SearchViewModel>

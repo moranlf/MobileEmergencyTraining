@@ -1,0 +1,34 @@
+﻿@model IEnumerable<MobileBasedTrainingServer.ViewModels.CourseViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Courses</h2>
+
+@(Html.Kendo().Grid(Model)    
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.Name).Width(200);
+        columns.Bound(c => c.Description);
+        columns.Bound(c => c.Cluster);
+        columns.Command(command => { command.Edit(); command.Destroy(); }).Width(200);
+    })
+    .ToolBar(toolbar => toolbar.Create())
+    .Editable(editable => editable.Mode(GridEditMode.PopUp))
+    .Groupable()
+    .Pageable()
+    .Sortable()
+    .Scrollable()
+    .Filterable()
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(20)
+        .Model(model => model.Id(c => c.Id))
+        .Create(create => create.Action("Courses_Create", "Course"))
+        .Read(read => read.Action("Courses_Read", "Course"))
+        .Update(update => update.Action("Courses_Update", "Course"))
+        .Destroy(destroy => destroy.Action("Courses_Destroy", "Course"))
+    )
+)

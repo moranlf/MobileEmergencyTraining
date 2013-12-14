@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6c3025449f7c4fb6b757b10c05b1cf58" Name="Diagram1" >
+        <EntityTypeShape EntityType="DataModel.Video" Width="1.5" PointX="5.75" PointY="1.625" />
+        <EntityTypeShape EntityType="DataModel.Tags" Width="1.5" PointX="8.125" PointY="0.5" />
+        <EntityTypeShape EntityType="DataModel.Ratings" Width="1.5" PointX="3.25" PointY="0.5" />
+        <AssociationConnector Association="DataModel.VideoRatings" />
+        <AssociationConnector Association="DataModel.VideoTags" />
+        <EntityTypeShape EntityType="DataModel.Cluster" Width="1.5" PointX="2.625" PointY="5.125" />
+        <EntityTypeShape EntityType="DataModel.Course" Width="1.5" PointX="5.875" PointY="5.125" />
+        <AssociationConnector Association="DataModel.ClusterCurriculum" />
+        <EntityTypeShape EntityType="DataModel.CourseVideo" Width="1.5" PointX="8.5" PointY="3.125" />
+        <AssociationConnector Association="DataModel.VideoCourseVideo" />
+        <AssociationConnector Association="DataModel.CourseCourseVideo" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
